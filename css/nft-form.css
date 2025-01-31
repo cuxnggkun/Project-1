@@ -1,0 +1,1031 @@
+body {
+    background-color: #fff;
+    color: #333;
+    padding: 20px;
+}
+
+.nft-form-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-decoration: none;
+}
+
+.back-button:hover {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.back-button svg {
+    width: 20px;
+    height: 20px;
+    stroke: #666;
+}
+
+.back-button span {
+    font-size: 14px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.upload-area {
+    border: 2px dashed #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+#upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.image-preview {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    display: none;
+}
+
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.remove-upload-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1;
+    padding: 0;
+}
+
+.remove-upload-btn:hover {
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.remove-upload-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: #666;
+}
+
+.remove-upload-btn:hover svg {
+    stroke: #333;
+}
+
+#preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+#preview-container img {
+    max-width: 300px;
+    max-height: 300px;
+    border-radius: 8px;
+}
+
+.property-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.property-name,
+.property-value {
+    flex: 1;
+}
+
+.remove-property {
+    padding: 0 12px;
+    background: none;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.secondary-button {
+    background: none;
+    border: 1px solid #e0e0e0;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.create-button {
+    width: 100%;
+    padding: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.create-button:hover {
+    background-color: #0056b3;
+}
+
+#nft-type-display {
+    color: #666;
+    margin-bottom: 24px;
+}
+
+.container-fluid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.nft-preview-container {
+    position: sticky;
+    top: 20px;
+    padding: 20px;
+}
+
+.nft-preview-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.preview-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.preview-image svg {
+    width: 100px;
+    height: 100px;
+    color: #ccc;
+}
+
+.preview-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    max-height: 200px;
+    padding: 10px;
+}
+
+.preview-details {
+    padding: 20px;
+}
+
+.preview-collection {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.preview-details h4 {
+    margin: 0 0 16px 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.preview-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.preview-properties {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+}
+
+.preview-property {
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 8px;
+    text-align: center;
+}
+
+.preview-property .property-name {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.preview-property .property-value {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Make the layout responsive */
+@media (max-width: 768px) {
+    .nft-preview-container {
+        position: static;
+        margin-top: 40px;
+    }
+
+    .container-fluid {
+        padding: 0 15px;
+    }
+}
+
+.advanced-settings {
+    background: #fff;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.properties-section {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.properties-header {
+    padding: 15px;
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.properties-header:hover {
+    background: #f8f9fa;
+}
+
+.header-content h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.header-content .subtitle {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.arrow-icon {
+    transition: transform 0.3s ease;
+}
+
+.properties-content {
+    padding: 15px;
+    border-top: 1px solid #e0e0e0;
+    background: #fff;
+}
+
+.add-property-btn {
+    background: none;
+    border: 1px solid #e0e0e0;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.add-property-btn:hover {
+    background: #f8f9fa;
+    border-color: #ccc;
+}
+
+.create-nft-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 24px;
+}
+
+.create-nft-btn:hover {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.remove-property {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #e0e0e0;
+    background: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #666;
+}
+
+.remove-property:hover {
+    background: #f8f9fa;
+    color: #333;
+}
+
+.property-name,
+.property-value {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.show-advanced-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 24px 0;
+    text-align: center;
+}
+
+.show-advanced-btn:hover {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+.loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+}
+
+/* Notifications */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 4px;
+    color: white;
+    z-index: 1000;
+    animation: slideIn 0.5s ease-out;
+}
+
+.success {
+    background-color: #4CAF50;
+}
+
+.error {
+    background-color: #f44336;
+}
+
+/* Modal Styles */
+.modal-backdrop {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.nft-info-modal {
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.modal-header {
+    padding: 24px 32px;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.nft-success-info {
+    padding: 32px;
+}
+
+.nft-image-preview {
+    text-align: center;
+    margin: 0 auto 32px auto;
+    max-width: 300px;
+}
+
+.nft-image-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.info-group {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.info-group h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 24px 0;
+    padding: 0 0 16px 0;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    padding: 16px 32px;
+    margin: 0 16px 12px 16px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.info-row:last-child {
+    margin-bottom: 0;
+}
+
+.info-row:hover {
+    background: #fff;
+    border-color: #dee2e6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px);
+}
+
+.info-label {
+    font-weight: 500;
+    color: #6c757d;
+    font-size: 14px;
+    padding-left: 16px;
+    padding-right: 24px;
+    flex: 0 0 160px;
+    text-align: right;
+}
+
+.info-value {
+    color: #212529;
+    font-size: 14px;
+    font-weight: 500;
+    flex: 1;
+    text-align: left;
+    padding-left: 24px;
+    padding-right: 16px;
+}
+
+.info-value a {
+    color: #0d6efd;
+    text-decoration: none;
+    transition: color 0.2s;
+    display: inline-block;
+    padding: 4px 0;
+}
+
+.info-value a:hover {
+    color: #0a58ca;
+    text-decoration: underline;
+}
+
+.modal-footer {
+    padding: 24px 32px;
+    border-top: 1px solid #eee;
+    background: #fff;
+}
+
+/* Animation */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.nft-info-modal {
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+/* Scrollbar Styling */
+.nft-success-info {
+    scrollbar-width: thin;
+    scrollbar-color: #dee2e6 #fff;
+}
+
+.nft-success-info::-webkit-scrollbar {
+    width: 8px;
+}
+
+.nft-success-info::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+.nft-success-info::-webkit-scrollbar-thumb {
+    background-color: #dee2e6;
+    border-radius: 4px;
+    border: 2px solid #fff;
+}
+
+/* Loading Modal Styles */
+.loading-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-content {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    width: 400px;
+    max-width: 90%;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.loading-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.loading-steps {
+    margin: 20px 0;
+}
+
+.loading-step {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    margin: 8px 0;
+    border-radius: 8px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.step-status {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-text {
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Step States */
+.step-pending {
+    color: #adb5bd;
+}
+
+.step-loading {
+    color: #007bff;
+    animation: spin 1s linear infinite;
+}
+
+.step-success {
+    color: #28a745;
+}
+
+.step-status i {
+    font-size: 18px;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Active step highlight */
+.loading-step.active {
+    border-color: #007bff;
+    background: #f8f9fa;
+}
+
+/* Success Modal Styles */
+#modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    display: none;
+}
+
+#nft-info-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 1001;
+    display: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.nft-success-info {
+    padding: 20px;
+}
+
+.nft-image-preview {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.nft-image-preview img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.info-group {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.info-group h4 {
+    margin: 0 0 12px 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.info-group p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.info-group a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.info-group a:hover {
+    text-decoration: underline;
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.modal-footer {
+    padding: 20px;
+    border-top: 1px solid #e0e0e0;
+    text-align: right;
+}
+
+.close-button {
+    width: auto;
+    min-width: 200px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #000;
+    background: #fff;
+    border: 2px solid #000;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.close-button:hover {
+    background: #000;
+    color: #fff;
+}
+
+.close-button i {
+    transition: all 0.3s ease;
+}
+
+.close-button:hover i {
+    color: #fff;
+}
+
+.close-button:active {
+    transform: scale(0.98);
+}
+
+.info-row {
+    display: flex;
+    margin-bottom: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.info-label {
+    flex: 0 0 140px;
+    font-weight: 500;
+    color: #666;
+}
+
+.info-value {
+    flex: 1;
+    color: #333;
+}
+
+.info-group {
+    margin-bottom: 24px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.info-group h4 {
+    margin-bottom: 16px;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.price-details {
+    margin-top: 10px;
+    font-size: 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    background-color: #f8f9fa;
+}
+
+.fee-row,
+.receive-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    color: #666;
+    padding: 8px 0;
+}
+
+.fee-row {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Thêm style cho fee label */
+.fee-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.fee-percentage {
+    color: #999;
+    font-size: 13px;
+}
+
+/* Căn chỉnh số tiền */
+.platform-fee,
+.you-will-receive {
+    font-weight: 500;
+    color: #333;
+    text-align: right;
+    min-width: 100px;
+    /* Đảm bảo khoảng cách đều nhau */
+}
+
+/* Hover effect */
+.price-details:hover {
+    border-color: #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.price-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.price-input-container input {
+    border: none;
+    flex: 1;
+    padding-right: 60px;
+    /* Để chừa chỗ cho đơn vị TIA */
+}
+
+.price-input-container input:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.price-divider {
+    width: 1px;
+    height: 20px;
+    background-color: #e0e0e0;
+    margin: 0 12px;
+}
+
+.price-currency {
+    color: #666;
+    font-size: 14px;
+    padding-right: 12px;
+    user-select: none;
+}
+
+/* Khi focus vào input, highlight cả container */
+.price-input-container:focus-within {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Mint Price Section */
+.mint-price-info {
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.mint-price-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.mint-price-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.mint-price-amount {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+}
+
+.mint-price-amount i {
+    font-size: 18px;
+    color: #000;
+}
+
+.mint-price-note {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}

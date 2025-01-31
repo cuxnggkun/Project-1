@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+    <!-- Custom CSS - Đảm bảo shared_navbar.css được import trước account_styles.css -->
+    <link rel="stylesheet" href="../css/shared_navbar.css">
+    <link rel="stylesheet" href="../css/account_styles.css">
+
+    <!-- Thêm Web3.js -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <!-- Thêm file JavaScript của chúng ta -->
+    <script src="../scripts/profile_manager.js"></script>
+    <script src="../scripts/wallet_manager.js"></script>
+    <script src="../scripts/account.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        /* Điều chỉnh kích thước ảnh trong profile section */
+        .profile-section .profile-avatar {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .profile-section .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Thêm hiệu ứng hover nhẹ */
+        .profile-section .profile-avatar img:hover {
+            transform: scale(1.02);
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header / Navbar -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="nav-group">
+                <a href="index.html" class="logo-brand">
+                    <img src="../assets/Logo.png" alt="Logo" width="45">
+                    <span>NFT Brand</span>
+                </a>
+                <div class="nav-links">
+                    <a href="create.html">Create</a>
+                    <a href="#">Explore</a>
+                    <a href="account.html">Sell</a>
+                    <a href="#">Marketplaces</a>
+                    <a href="#">Airdrop</a>
+                </div>
+            </div>
+            <div class="navbar-right">
+                <div class="search-box">
+                    <input type="text" placeholder="Search for NFTS, collections, users." class="form-control">
+                    <i class="bi bi-search"></i>
+                </div>
+                <div id="walletSection">
+                    <div id="walletInfo" class="dropdown">
+                        <div class="wallet-dropdown" data-bs-toggle="dropdown">
+                            <img src="../assets/user.png" alt="Wallet Avatar" class="wallet-avatar"
+                                id="navbarUserAvatar">
+                            <span id="walletAddress">0x0000...0000</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="../html/account.html">
+                                <i class="fas fa-user"></i>
+                                Profile
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-question-circle"></i>
+                                Help Center & Documentation
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <div class="network-item">
+                                Network
+                                <span>Forma</span>
+                            </div>
+                            <div class="theme-item">
+                                Theme
+                                <div class="theme-options">
+                                    <button class="theme-btn active">Light</button>
+                                    <button class="theme-btn">Dark</button>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" onclick="WalletManager.disconnect()">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Sign Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="main-container">
+        <section class="profile-section">
+            <div class="profile-avatar">
+                <img id="profileImage" src="../assets/user.png" alt="Profile Picture">
+            </div>
+            <h2 id="profileName" class="mb-2">Loading...</h2>
+            <div class="d-flex align-items-center justify-content-center mb-3">
+                <span class="copy-address" onclick="copyAddress()" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="Copy address">
+                    <i class="fas fa-wallet me-1"></i>
+                    <span id="shortAddressDisplay"></span>
+                </span>
+            </div>
+            <p id="profileBio" class="text-muted">Loading bio...</p>
+            <div class="profile-links d-flex justify-content-center gap-3 mb-4">
+                <a href="setup_profile.html">
+                    <i class="fas fa-user-edit"></i>
+                    Set up your profile
+                </a>
+                <a href="#" class="verify">
+                    <i class="fas fa-check-circle"></i>
+                    Request verification
+                </a>
+            </div>
+        </section>
+
+        <!-- Tabs -->
+        <nav class="tabs-nav">
+            <ul>
+                <li><a href="#collected">Collected</a></li>
+                <li><a href="#collections">Collections</a></li>
+                <li><a href="#listings">Listings</a></li>
+                <li><a href="#sent-offers">Sent offers</a></li>
+                <li><a href="#received-offers">Received offers</a></li>
+                <li><a href="#rewards">Rewards</a></li>
+            </ul>
+        </nav>
+
+        <!-- Toolbar Row -->
+        <div class="toolbar-row">
+            <div class="filter-section">
+                <input type="text" placeholder="Filter tokens by name or ID" class="filter-input">
+            </div>
+            <div class="right-actions">
+                <button class="create-collection-btn">Create collection</button>
+            </div>
+        </div>
+
+        <!-- Tab Contents - Mỗi tab content là một div riêng biệt -->
+        <div id="collected" class="tab-content">
+            <div id="collected-nfts" class="nft-grid"></div>
+            <div id="loading-nfts" style="display: none;">Loading your NFTs...</div>
+            <div id="no-nfts" style="display: none;">You haven't collected any NFTs yet.</div>
+        </div>
+
+        <div class="tab-content" id="collections" style="display: none;">
+            <!-- Loading State -->
+            <div id="loading-collections" class="loading-state">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p>Loading your collections...</p>
+            </div>
+
+            <!-- No Collections State -->
+            <div id="no-collections" class="no-items-state" style="display: none;">
+                <i class="bi bi-collection"></i>
+                <p>No collections to display</p>
+            </div>
+
+            <!-- Collections Grid -->
+            <div id="user-collections" class="nft-grid">
+                <!-- Collections will be added here -->
+            </div>
+        </div>
+
+        <div id="listings" class="tab-content" style="display: none;">
+            <div class="no-items">
+                <h3>No active listings</h3>
+                <p>Your NFTs for sale will appear here</p>
+            </div>
+        </div>
+
+        <div id="sent-offers" class="tab-content" style="display: none;">
+            <div class="no-items">
+                <h3>No sent offers</h3>
+                <p>Offers you've made will appear here</p>
+            </div>
+        </div>
+
+        <div id="received-offers" class="tab-content" style="display: none;">
+            <div class="no-items">
+                <h3>No received offers</h3>
+                <p>Offers on your NFTs will appear here</p>
+            </div>
+        </div>
+
+        <div id="rewards" class="tab-content" style="display: none;">
+            <div class="no-items">
+                <h3>No rewards yet</h3>
+                <p>Complete activities to earn rewards</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

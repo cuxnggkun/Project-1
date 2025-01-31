@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create NFT - Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/nft-form.css">
+</head>
+
+<body>
+    <div class="back-button" onclick="window.location.href='../html/create.html'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5" />
+            <path d="M12 19l-7-7 7-7" />
+        </svg>
+        <span>Back</span>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Form Section -->
+            <div class="col-md-7">
+                <div class="nft-form-container">
+                    <h2>Create Your NFT</h2>
+                    <p id="nft-type-display"></p>
+
+                    <form id="nft-creation-form">
+                        <div class="form-group">
+                            <label for="nft-image">Upload Image</label>
+                            <div class="upload-area" id="upload-area">
+                                <input type="file" id="file-input" accept="image/*" hidden>
+                                <div id="upload-content">
+                                    <div id="preview-container">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                            <polyline points="17 8 12 3 7 8" />
+                                            <line x1="12" y1="3" x2="12" y2="15" />
+                                        </svg>
+                                        <p>Click to upload</p>
+                                        <span>PNG, JPG, GIF </span>
+                                    </div>
+                                </div>
+                                <div id="image-preview" class="image-preview" style="display: none;">
+                                    <img id="uploaded-image" src="" alt="Uploaded image">
+                                    <button type="button" class="remove-upload-btn" id="remove-upload">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nft-name">Name</label>
+                            <input type="text" id="nft-name" required placeholder="Item name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nft-description">Description</label>
+                            <textarea id="nft-description" rows="4"
+                                placeholder="Provide a detailed description of your item"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="mint-price-info">
+                                <div class="mint-price-header">
+                                    <span class="mint-price-label">Mint Price</span>
+                                    <span class="mint-price-amount">
+                                        <i class="bi bi-coin"></i>
+                                        0.01 TIA
+                                    </span>
+                                </div>
+                                <p class="mint-price-note">
+                                    This is a one-time fee to mint your NFT on the blockchain.
+                                    The price includes network fees.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nft-royalty">Royalty (%)</label>
+                            <input type="number" id="nft-royalty" required min="0" max="15" step="0.1"
+                                placeholder="e.g. 5.0">
+                        </div>
+
+                        <div class="advanced-settings-container">
+                            <button type="button" class="show-advanced-btn" onclick="toggleAdvancedSettings()">
+                                Show advanced settings
+                            </button>
+
+                            <div id="advanced-settings" class="advanced-settings" style="display: none;">
+                                <div class="properties-section">
+                                    <div class="properties-header" onclick="toggleProperties()">
+                                        <div class="header-content">
+                                            <h4>Properties</h4>
+                                            <p class="subtitle">Add properties to your NFT (Optional)</p>
+                                        </div>
+                                        <svg class="arrow-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <polyline points="6 9 12 15 18 9"></polyline>
+                                        </svg>
+                                    </div>
+
+                                    <div id="properties-content" class="properties-content" style="display: none;">
+                                        <div id="properties-container">
+                                            <div class="property-row">
+                                                <input type="text" placeholder="Property name" class="property-name">
+                                                <input type="text" placeholder="Value" class="property-value">
+                                                <button type="button" class="remove-property"
+                                                    onclick="removeProperty(this)">×</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="create-nft-btn">Create NFT</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Preview Section -->
+            <div class="col-md-5">
+                <div class="nft-preview-container">
+                    <h3>Preview</h3>
+                    <div class="nft-preview-card">
+                        <div class="preview-image">
+                            <svg id="preview-placeholder" width="100" height="100" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                <circle cx="8.5" cy="8.5" r="1.5" />
+                                <polyline points="21 15 16 10 5 21" />
+                            </svg>
+                            <img id="preview-image" src="" alt="NFT Preview" style="display: none;">
+                        </div>
+                        <div class="preview-details">
+                            <div class="preview-collection">Collection Name</div>
+                            <h4 id="preview-name">NFT Name</h4>
+                            <div class="preview-description" id="preview-description">
+                                Description will appear here...
+                            </div>
+                            <div class="preview-properties" id="preview-properties">
+                                <!-- Properties will be dynamically added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Creating your NFT...</p>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="nft-info-modal" id="nft-info-modal">
+        <div class="modal-header">
+            <h3>NFT Created Successfully!</h3>
+        </div>
+        <div class="nft-info-content" id="nft-info-content">
+            <!-- NFT info will be inserted here -->
+        </div>
+        <div class="modal-footer">
+            <button class="close-button" onclick="closeNFTModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Price input handling
+            const priceInput = document.getElementById('mint-price');
+            const previewPrice = document.getElementById('preview-price');
+
+            if (priceInput && previewPrice) {
+                priceInput.addEventListener('input', function (e) {
+                    previewPrice.textContent = `${e.target.value || '0.00'} TIA`;
+                });
+            }
+
+            // Name input handling
+            const nameInput = document.getElementById('nft-name');
+            const previewName = document.getElementById('preview-name');
+
+            if (nameInput && previewName) {
+                nameInput.addEventListener('input', function (e) {
+                    previewName.textContent = e.target.value || 'NFT Name';
+                });
+            }
+
+            // Description input handling
+            const descInput = document.getElementById('nft-description');
+            const previewDesc = document.getElementById('preview-description');
+
+            if (descInput && previewDesc) {
+                descInput.addEventListener('input', function (e) {
+                    previewDesc.textContent = e.target.value || 'Description will appear here...';
+                });
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/scripts/createNFT.js"></script>
+    <script>
+        // Upload Image Handling
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        const uploadContent = document.getElementById('upload-content');
+        const imagePreview = document.getElementById('image-preview');
+        const uploadedImage = document.getElementById('uploaded-image');
+        const removeUploadBtn = document.getElementById('remove-upload');
+        const previewContainer = document.getElementById('preview-container');
+
+        // Make upload area clickable
+        uploadArea.addEventListener('click', function (e) {
+            if (e.target !== removeUploadBtn && !removeUploadBtn.contains(e.target)) {
+                fileInput.click();
+            }
+        });
+
+        // Handle file selection
+        fileInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    // Update upload area preview
+                    uploadedImage.src = e.target.result;
+                    uploadContent.style.display = 'none';
+                    imagePreview.style.display = 'block';
+
+                    // Update NFT preview
+                    const previewImage = document.getElementById('preview-image');
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                    document.getElementById('preview-placeholder').style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Remove uploaded image
+        removeUploadBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            fileInput.value = '';
+            uploadedImage.src = '';
+            uploadContent.style.display = 'flex';
+            imagePreview.style.display = 'none';
+
+            // Reset preview image
+            const previewImage = document.getElementById('preview-image');
+            previewImage.style.display = 'none';
+            document.getElementById('preview-placeholder').style.display = 'block';
+        });
+
+        // Advanced Settings Toggle
+        function toggleAdvancedSettings() {
+            const advancedSettings = document.getElementById('advanced-settings');
+            const showAdvancedBtn = document.querySelector('.show-advanced-btn');
+
+            if (advancedSettings.style.display === 'none') {
+                advancedSettings.style.display = 'block';
+                showAdvancedBtn.textContent = 'Hide advanced settings';
+            } else {
+                advancedSettings.style.display = 'none';
+                showAdvancedBtn.textContent = 'Show advanced settings';
+            }
+        }
+
+        // Properties Toggle
+        function toggleProperties() {
+            const propertiesContent = document.getElementById('properties-content');
+            const arrowIcon = document.querySelector('.arrow-icon');
+
+            if (propertiesContent.style.display === 'none') {
+                propertiesContent.style.display = 'block';
+                arrowIcon.style.transform = 'rotate(180deg)';
+            } else {
+                propertiesContent.style.display = 'none';
+                arrowIcon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Auto add new property row when both inputs are filled
+        document.getElementById('properties-container').addEventListener('input', function (e) {
+            if (e.target.classList.contains('property-name') || e.target.classList.contains('property-value')) {
+                const row = e.target.closest('.property-row');
+                const nameInput = row.querySelector('.property-name');
+                const valueInput = row.querySelector('.property-value');
+
+                // Check if this is the last row and both inputs are filled
+                if (row === row.parentElement.lastElementChild &&
+                    nameInput.value.trim() !== '' &&
+                    valueInput.value.trim() !== '') {
+                    // Add new row
+                    const newRow = document.createElement('div');
+                    newRow.className = 'property-row';
+                    newRow.innerHTML = `
+                        <input type="text" placeholder="Property name" class="property-name">
+                        <input type="text" placeholder="Value" class="property-value">
+                        <button type="button" class="remove-property" onclick="removeProperty(this)">×</button>
+                    `;
+                    row.parentElement.appendChild(newRow);
+                }
+
+                updatePropertiesPreview();
+            }
+        });
+
+        // Remove Property and update preview
+        function removeProperty(button) {
+            const container = document.getElementById('properties-container');
+            const rows = container.getElementsByClassName('property-row');
+
+            // Don't remove if it's the only row
+            if (rows.length > 1) {
+                button.parentElement.remove();
+            } else {
+                // If it's the last row, just clear the inputs
+                const row = button.parentElement;
+                row.querySelector('.property-name').value = '';
+                row.querySelector('.property-value').value = '';
+            }
+
+            updatePropertiesPreview();
+        }
+
+        // Update properties preview
+        function updatePropertiesPreview() {
+            const previewProperties = document.getElementById('preview-properties');
+            previewProperties.innerHTML = ''; // Clear existing properties
+
+            const propertyRows = document.querySelectorAll('.property-row');
+            propertyRows.forEach(row => {
+                const name = row.querySelector('.property-name').value.trim();
+                const value = row.querySelector('.property-value').value.trim();
+
+                if (name && value) {
+                    const propertyElement = document.createElement('div');
+                    propertyElement.className = 'preview-property';
+                    propertyElement.innerHTML = `
+                        <div class="property-name">${name}</div>
+                        <div class="property-value">${value}</div>
+                    `;
+                    previewProperties.appendChild(propertyElement);
+                }
+            });
+        }
+
+        // Close NFT Modal
+        function closeNFTModal() {
+            document.getElementById('modal-backdrop').style.display = 'none';
+            document.getElementById('nft-info-modal').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

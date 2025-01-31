@@ -1,0 +1,430 @@
+/*
+    ===============================
+    =         RESET / BASE        =
+    ===============================
+    */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background-color: #ffffff;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/*
+        ===============================
+        =          NAVBAR             =
+        ===============================
+        */
+/* Xóa phần navbar CSS ở đây */
+
+/* Main Content */
+.main-content {
+    padding: 2rem;
+}
+
+/* Card Grid */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.nft-card {
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nft-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.card-text {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.price-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.eth-price {
+    font-weight: 600;
+    color: #333;
+}
+
+.usd-price {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.card-footer {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 0.5rem;
+    font-weight: 500;
+}
+
+/* Connect Button */
+.connect-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+/* Wallet Info */
+#walletInfo .dropdown-toggle {
+    font-size: 14px;
+}
+
+#walletInfo .dropdown-menu {
+    min-width: 240px;
+    padding: 8px;
+}
+
+#walletInfo .dropdown-item {
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#walletInfo .dropdown-item i {
+    color: #666;
+}
+
+#walletInfo .dropdown-divider {
+    margin: 8px 0;
+}
+
+/* Theme Buttons */
+.btn-light,
+.btn-dark {
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+/* Loading Animation */
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #3498db;
+    border-radius: 50%;
+    animation: loading 1s linear infinite;
+    margin-right: 8px;
+}
+
+/*
+        ===============================
+        =         CAROUSEL            =
+        ===============================
+        */
+.carousel {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    margin-top: 1%;
+    margin-left: 35px;
+    margin-right: 35px;
+}
+
+.carousel-inner img {
+    height: 500px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+/* Thêm hiệu ứng fade chuyển slide mượt mà */
+.carousel-fade .carousel-item {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.carousel-fade .carousel-item.active,
+.carousel-fade .carousel-item-next.carousel-item-start,
+.carousel-fade .carousel-item-prev.carousel-item-end {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/*
+        ===============================
+        =       NFT CARDS SECTION     =
+        ===============================
+        */
+.cards-section {
+    margin-top: 2%;
+    margin-left: 35px;
+    margin-right: 35px;
+}
+
+.nft-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.nft-card .p-3 {
+    padding: 1rem;
+}
+
+/* Tác giả + icon */
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.author-info .verified {
+    color: #ffc107;
+    /* Chấm vàng */
+}
+
+/* Tiêu đề NFT */
+.nft-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+/* Thông tin meta */
+.nft-meta {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+.nft-meta .label {
+    color: #444;
+    font-weight: 500;
+}
+
+.nft-price {
+    font-weight: 600;
+}
+
+/*
+        ===============================
+        =            FOOTER           =
+        ===============================
+        */
+.custom-footer {
+    background-color: #f9f9f9;
+    color: #333333;
+}
+
+.footer-col {
+    margin-bottom: 1rem;
+}
+
+.footer-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.footer-description {
+    color: #555;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+/* Form subscribe */
+.footer-subscribe input.form-control {
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    border: none;
+}
+
+.footer-subscribe input.form-control::placeholder {
+    color: #888;
+}
+
+.footer-subscribe .btn-primary {
+    border: none;
+    border-radius: 5px;
+    white-space: nowrap;
+    transition: transform 0.2s ease;
+}
+
+.footer-subscribe .btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Social icons */
+.social-icons img {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.2s ease;
+}
+
+.social-icons img:hover {
+    transform: translateY(-2px);
+}
+
+/* Phần bottom footer (bản quyền, vv.) */
+.footer-bottom {
+    border-top: 1px solid #eaeaea;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    text-align: center;
+}
+
+/*
+        ===============================
+        =         MEDIA QUERIES       =
+        ===============================
+        */
+@media (max-width: 992px) {
+    .search-container {
+        width: auto;
+    }
+
+    .input-search {
+        width: 200px;
+    }
+}
+
+.loading-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loading-content {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    width: 400px;
+    text-align: center;
+}
+
+.loading-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.loading-steps {
+    text-align: left;
+    margin: 20px 0;
+}
+
+.loading-step {
+    display: flex;
+    align-items: center;
+    margin: 12px 0;
+    padding: 10px;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.step-status {
+    margin-right: 12px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-status i {
+    font-size: 18px;
+}
+
+.step-pending {
+    color: #6c757d;
+}
+
+.step-loading {
+    color: #007bff;
+    animation: spin 1s linear infinite;
+}
+
+.step-success {
+    color: #28a745;
+}
+
+.step-text {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

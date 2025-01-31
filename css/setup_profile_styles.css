@@ -1,0 +1,227 @@
+body {
+    background-color: #ffffff;
+    color: #333333;
+}
+
+.container {
+    max-width: 800px;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: normal;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+/* Nav Tabs */
+.nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.nav-tabs .nav-link {
+    color: #666;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+}
+
+.nav-tabs .nav-link.active {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    font-weight: 500;
+}
+
+/* Form Controls */
+.form-label {
+    color: #333333;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    color: #333333;
+    padding: 0.75rem;
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    background-color: #ffffff;
+    border-color: #007bff;
+    color: #333333;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+/* Upload Box */
+.upload-box {
+    border: 1px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    background-color: #f8f9fa;
+    transition: all 0.2s ease;
+}
+
+.upload-placeholder {
+    width: 100%;
+    height: 200px;
+    border: 2px dashed #ccc;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    gap: 8px;
+    background-color: #fff;
+}
+
+.upload-placeholder i {
+    font-size: 1.5rem;
+    color: #666;
+}
+
+.upload-placeholder span {
+    color: #666;
+}
+
+#imagePreview {
+    width: 100%;
+    max-width: 100%;
+    height: 200px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.upload-placeholder label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    gap: 15px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.upload-icon {
+    font-size: 2.5rem;
+    color: #666;
+}
+
+/* Character Count */
+.char-count {
+    text-align: right;
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+/* Email Link Button */
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #dee2e6;
+    background-color: transparent;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    color: #333333;
+}
+
+/* Readonly Input */
+.form-control[readonly] {
+    background-color: #f8f9fa;
+    opacity: 0.7;
+}
+
+/* Placeholder Color */
+.form-control::placeholder {
+    color: #6c757d;
+}
+
+/* Hover states */
+.upload-box:hover {
+    border-color: #007bff;
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Wallet Section Styles */
+.wallet-section {
+    padding: 20px 0;
+}
+
+.wallet-info {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wallet-address {
+    display: flex;
+    align-items: center;
+    font-family: monospace;
+    color: #333;
+}
+
+.wallet-address i {
+    color: #6c757d;
+}
+
+.address-text {
+    font-size: 14px;
+}
+
+.wallet-status {
+    display: flex;
+    align-items: center;
+}
+
+.status-badge {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Form Actions */
+.form-actions {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.save-btn {
+    padding: 10px 24px;
+    font-weight: 500;
+}
+
+/* Small Text */
+.text-muted {
+    color: #6c757d !important;
+    font-size: 0.875rem;
+}
+
+/* Input Group Button */
+.input-group .btn-outline-secondary {
+    border-left: none;
+}
+
+.input-group .form-control:focus+.btn-outline-secondary {
+    border-color: #007bff;
+}
+
+/* Hover effect */
+.upload-placeholder:hover {
+    border-color: #666;
+    background-color: #f8f9fa;
+}

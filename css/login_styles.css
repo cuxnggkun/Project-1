@@ -1,0 +1,18 @@
+/* 
+  Bạn có thể thêm/bớt/tùy chỉnh style ở đây.
+  Tailwind lo phần utility classes, 
+  file này dành cho những custom style mà bạn muốn thêm.
+*/
+
+/* Ví dụ custom lại kích thước logo */
+.logo {
+    width: 120px;  /* Bạn có thể thay đổi tùy ý */
+    height: auto;  /* Giữ tỷ lệ nếu cần */
+}
+
+/* Ví dụ: thay đổi màu viền khi hover ở các button */
+button:hover {
+    border-color: #999999;  /* Màu viền khi hover */
+}
+
+/* Bạn có thể thêm các style khác tùy theo nhu cầu */

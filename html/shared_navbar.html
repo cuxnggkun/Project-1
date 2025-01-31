@@ -1,0 +1,64 @@
+<nav class="navbar">
+    <div class="container-fluid">
+        <div class="nav-group">
+            <a href="index.html" class="logo-brand">
+                <img src="../assets/Logo.png" alt="Logo" width="40">
+                <span>NFT Brand</span>
+            </a>
+            <div class="nav-links">
+                <a href="create.html">Create</a>
+                <a href="#">Explore</a>
+                <a href="account.html">Sell</a>
+                <a href="#">Marketplaces</a>
+                <a href="#">Airdrop</a>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <div class="search-box">
+                <input type="text" placeholder="Search for NFTS, collections, users." class="form-control">
+                <i class="bi bi-search"></i>
+            </div>
+            <div id="walletSection">
+                <button id="connectWalletBtn" class="btn btn-outline-success connect-btn" type="button"
+                    onclick="window.location.href='../html/login.html';">
+                    Connect wallet
+                </button>
+
+                <div id="walletInfo" class="dropdown" style="display: none;">
+                    <div class="wallet-dropdown" data-bs-toggle="dropdown">
+                        <img src="../assets/user.png" alt="Wallet Avatar" class="wallet-avatar">
+                        <span id="navbarUsername">0x0000...0000</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="../html/account.html">
+                            <i class="fas fa-user"></i>
+                            Profile
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <i class="fas fa-question-circle"></i>
+                            Help Center & Documentation
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <div class="network-item">
+                            Network
+                            <span>Ethereum</span>
+                        </div>
+                        <div class="theme-item">
+                            Theme
+                            <div class="theme-options">
+                                <button class="theme-btn active">Light</button>
+                                <button class="theme-btn">Dark</button>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" onclick="disconnectWallet()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Sign Out
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
