@@ -1004,6 +1004,7 @@ async function initWeb3() {
 
       const accounts = await web3.eth.getAccounts();
       userAddress = accounts[0];
+      console.log('Connected wallet address:', userAddress);
 
       // Initialize contract
       nftContract = new web3.eth.Contract(contractABI, contractAddress);
@@ -1205,39 +1206,26 @@ async function handleCreateNFT(name, description, file) {
     // Prepare metadata
     updateLoadingStep('metadata', 'loading');
 
-    // Thu thập và validate attributes
+    // Thu thập attributes
     const attributes = [];
     const propertiesContainer = document.getElementById('properties-container');
-
-    if (!propertiesContainer) {
-      console.warn('Properties container not found');
-    } else {
+    if (propertiesContainer) {
       const propertyRows = propertiesContainer.querySelectorAll('.property-row');
-      console.log('Found property rows:', propertyRows.length);
-
-      propertyRows.forEach((row, index) => {
+      propertyRows.forEach(row => {
         const nameInput = row.querySelector('.property-name');
         const valueInput = row.querySelector('.property-value');
-
-        if (!nameInput || !valueInput) {
-          console.warn(`Skipping invalid property row ${index + 1}`);
-          return;
-        }
-
-        const traitType = nameInput.value.trim();
-        const value = valueInput.value.trim();
-
-        if (traitType && value) {
-          console.log(`Adding attribute: ${traitType} = ${value}`);
-          attributes.push({
-            trait_type: traitType,
-            value: value
-          });
+        if (nameInput && valueInput) {
+          const traitType = nameInput.value.trim();
+          const value = valueInput.value.trim();
+          if (traitType && value) {
+            attributes.push({
+              trait_type: traitType,
+              value: value
+            });
+          }
         }
       });
     }
-
-    console.log('Final collected attributes:', attributes);
 
     // Prepare metadata object
     const metadata = {
@@ -1247,37 +1235,28 @@ async function handleCreateNFT(name, description, file) {
       attributes: attributes
     };
 
-    console.log('Full metadata before upload:', metadata);
-
-    // Validate metadata
-    if (!metadata.name) throw new Error('NFT name is required');
-    if (!metadata.image) throw new Error('Image hash is required');
-
     // Upload metadata to IPFS
     const metadataHash = await uploadMetadataToIPFS(metadata);
     if (!metadataHash) throw new Error('Failed to upload metadata to IPFS');
     console.log('Metadata uploaded:', metadataHash);
     updateLoadingStep('metadata', 'success');
 
-    // Trước khi mint, kiểm tra metadataHash
-    if (!metadataHash.startsWith('ipfs://')) {
-      metadataHash = `ipfs://${metadataHash}`;
-    }
-
     // Mint NFT
     updateLoadingStep('mint', 'loading');
-    console.log('Minting NFT with params:', {
-      metadataHash,
-      from: userAddress,
-      value: web3.utils.toWei(MINT_PRICE, 'ether')
-    });
-
     const tx = await nftContract.methods.publicMint(metadataHash).send({
       from: userAddress,
       value: web3.utils.toWei(MINT_PRICE, 'ether')
     });
     console.log('NFT minted successfully:', tx);
     updateLoadingStep('mint', 'success');
+
+    // Lưu NFT vào MongoDB - giờ chỉ lưu metadata URI
+    try {
+      await saveNewNFTToServer(userAddress, metadataHash);
+      console.log('NFT metadata URI saved to database');
+    } catch (dbError) {
+      console.error('Error saving NFT to database:', dbError);
+    }
 
     await new Promise(resolve => setTimeout(resolve, 1000));
 
@@ -1288,11 +1267,7 @@ async function handleCreateNFT(name, description, file) {
       metadata
     };
   } catch (error) {
-    console.error('Mint error details:', {
-      error: error.message,
-      metadataHash,
-      mintPrice: MINT_PRICE
-    });
+    console.error('Mint error:', error);
     throw error;
   } finally {
     hideLoadingModal();
@@ -1454,5 +1429,41 @@ function toggleProperties() {
   const propertiesContent = document.getElementById('properties-content');
   if (propertiesContent) {
     propertiesContent.style.display = propertiesContent.style.display === 'none' ? 'block' : 'none';
+  }
+}
+
+async function saveNewNFTToServer(walletAddress, metadataUri) {
+  try {
+    if (!walletAddress) {
+      throw new Error('Wallet address is required');
+    }
+
+    const requestData = {
+      walletAddress: walletAddress,
+      metadataUri: metadataUri  // IPFS URI của metadata
+    };
+
+    console.log('Request data:', requestData);
+
+    const response = await fetch('http://localhost:8000/api/save-nft', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Server error response:', errorData);
+      throw new Error(errorData.detail || 'Failed to save NFT');
+    }
+
+    const result = await response.json();
+    console.log('Kết quả lưu NFT mới:', result);
+    return result;
+  } catch (error) {
+    console.error('Lỗi khi lưu NFT mới:', error);
+    throw error;
   }
 }

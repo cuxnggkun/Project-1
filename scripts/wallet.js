@@ -10,7 +10,7 @@ async function connectMetaMask() {
                 await window.ethereum.request({
                     method: 'wallet_addEthereumChain',
                     params: [{
-                        chainId: '0xF043B', 
+                        chainId: '0xF043B',
                         chainName: 'Forma Sketchpad',
                         nativeCurrency: {
                             name: 'Test TIA',
@@ -35,7 +35,13 @@ async function connectMetaMask() {
             localStorage.setItem("walletAddress", account);
 
             // Gửi địa chỉ ví đến backend để lưu
-            await saveWalletAddressToServer(account);
+            try {
+                const result = await saveWalletAddressToServer(account);
+                console.log("Đã lưu địa chỉ ví vào server:", result);
+            } catch (saveError) {
+                console.error("Lỗi khi lưu địa chỉ ví vào server:", saveError);
+                // Vẫn tiếp tục nếu lưu server thất bại
+            }
 
             // Chuyển hướng về trang chính
             window.location.href = "index.html";
@@ -59,8 +65,10 @@ async function saveWalletAddressToServer(walletAddress) {
 
         const result = await response.json();
         console.log('Kết quả từ server:', result);
+        return result;
     } catch (error) {
         console.error('Lỗi khi lưu địa chỉ ví:', error);
+        throw error;
     }
 }
 
@@ -115,6 +123,36 @@ async function connectKeplrWallet() {
         }
     } else {
         alert('Vui lòng cài đặt Keplr Wallet!');
+    }
+}
+
+// Thêm hàm lưu NFT
+async function saveNFTToServer(walletAddress, nftData) {
+    try {
+        const response = await fetch('http://localhost:8000/api/save-nft', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                walletAddress: walletAddress,
+                metadata: {
+                    name: nftData.name,
+                    description: nftData.description,
+                    image: nftData.image,
+                    price: nftData.price,
+                    is_listed: nftData.is_listed || false,
+                    attributes: nftData.attributes || []
+                }
+            })
+        });
+
+        const result = await response.json();
+        console.log('Kết quả lưu NFT:', result);
+        return result;
+    } catch (error) {
+        console.error('Lỗi khi lưu NFT:', error);
+        throw error;
     }
 }
 

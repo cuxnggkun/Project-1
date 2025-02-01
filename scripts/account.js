@@ -1814,3 +1814,25 @@ async function checkAndApprove(contract, userAddress) {
     }
     return true;
 }
+
+async function updateNFTListing(nftId, listingData) {
+    try {
+        const response = await fetch(`http://localhost:8000/api/update-nft-listing/${nftId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                is_listed: listingData.is_listed,
+                price: listingData.price
+            })
+        });
+
+        const result = await response.json();
+        console.log('Kết quả cập nhật listing:', result);
+        return result;
+    } catch (error) {
+        console.error('Lỗi khi cập nhật listing:', error);
+        throw error;
+    }
+}
