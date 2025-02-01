@@ -1414,14 +1414,16 @@ function createNFTCard(tokenId, metadata) {
         <div class="nft-image">
             <img src="${metadata.image.replace('ipfs://', 'https://ipfs.io/ipfs/')}" 
                  alt="${metadata.name}">
+            <div class="nft-overlay">
+                <div class="nft-buttons">
+                    <button class="nft-button primary list-for-sale" data-token-id="${tokenId}">List for sale</button>
+                    <button class="nft-button secondary show-details" data-token-id="${tokenId}">...</button>
+                </div>
+            </div>
         </div>
         <div class="nft-info">
             <h3>${metadata.name}</h3>
             <p class="nft-description">${metadata.description || 'No description'}</p>
-            <div class="nft-buttons">
-                <button class="nft-button primary list-for-sale" data-token-id="${tokenId}">List for sale</button>
-                <button class="nft-button secondary">...</button>
-            </div>
         </div>
     `;
 

@@ -1,3 +1,4 @@
+// Copy contractABI và contractAddress từ marketplace.js
 const contractABI = [
     {
         "inputs": [],
@@ -975,165 +976,212 @@ const contractABI = [
 ];
 const contractAddress = "0xDd5e79e75dF4a14550E8127Acf2AE6414E937505";
 
-async function loadListedNFTs() {
-    const nftGrid = document.getElementById('nft-grid');
-    const loading = document.getElementById('loading');
-    const noNfts = document.getElementById('no-nfts');
-
-    try {
-        loading.style.display = 'block';
-        nftGrid.innerHTML = '';  // Clear grid
-        noNfts.style.display = 'none';
-
-        const web3 = new Web3(window.ethereum);
-        const contract = new web3.eth.Contract(contractABI, contractAddress);
-
-        // Lấy tổng supply của NFT
-        const totalSupply = await contract.methods.totalSupply().call();
-        let listedNFTs = [];
-
-        // Kiểm tra từng NFT
-        for (let i = 0; i < totalSupply; i++) {
-            const tokenId = await contract.methods.tokenByIndex(i).call();
-            const listing = await contract.methods.getListingInfo(tokenId).call();
-
-            if (listing.isListed) {
-                const tokenURI = await contract.methods.tokenURI(tokenId).call();
-                const metadata = await fetchMetadata(tokenURI);
-                const owner = await contract.methods.ownerOf(tokenId).call();
-
-                // Thêm thông tin creator
-                const userProfile = JSON.parse(localStorage.getItem(`profile_${owner}`)) || {};
-                const creator = {
-                    address: owner,
-                    name: userProfile.name || `${owner.substring(0, 6)}...${owner.substring(38)}`,
-                    avatar: userProfile.profilePicture || '../assets/default-avatar.png'
-                };
-
-                listedNFTs.push({
-                    tokenId,
-                    price: listing.price,
-                    seller: listing.seller,
-                    metadata: {
-                        ...metadata,
-                        creator,
-                        isListed: true
-                    }
-                });
-            }
-        }
-
-        if (listedNFTs.length === 0) {
-            noNfts.style.display = 'block';
-            return;
-        }
-
-        // Hiển thị NFTs - Thay đổi cách render
-        listedNFTs.forEach(nft => {
-            const card = createNFTCard(nft);
-            nftGrid.appendChild(card);
-        });
-
-    } catch (error) {
-        console.error('Error loading NFTs:', error);
-        noNfts.textContent = 'Error loading NFTs: ' + error.message;
-        noNfts.style.display = 'block';
-    } finally {
-        loading.style.display = 'none';
-    }
-}
-
-function createNFTCard(nft) {
-    const card = document.createElement('div');
-    card.className = 'nft-card';
-    card.innerHTML = `
-        <div class="nft-image">
-            <img src="${nft.metadata.image.replace('ipfs://', 'https://ipfs.io/ipfs/')}" alt="${nft.metadata.name}">
-            <div class="nft-overlay">
-                <button class="buy-button" onclick="buyNFT('${nft.tokenId}')">Buy Now</button>
-            </div>
-        </div>
-        <div class="nft-info">
-            <h3>${nft.metadata.name}</h3>
-            <div class="nft-price">
-                <span class="price-value">${Web3.utils.fromWei(nft.price.toString(), 'ether')} TIA</span>
-            </div>
-        </div>
-    `;
-
-    // Add click event to card
-    card.addEventListener('click', () => {
-        window.location.href = `nft-details.html?tokenId=${nft.tokenId}`;
-    });
-
-    // Prevent Buy Now button from triggering card click
-    const buyButton = card.querySelector('.buy-button');
-    buyButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-    });
-
-    return card;
-}
-
-async function buyNFT(tokenId) {
-    try {
-        const web3 = new Web3(window.ethereum);
-        const accounts = await web3.eth.requestAccounts();
-        const userAddress = accounts[0];
-
-        const contract = new web3.eth.Contract(contractABI, contractAddress);
-
-        // Lấy thông tin listing của NFT
-        const listing = await contract.methods.getListingInfo(tokenId).call();
-        if (!listing.isListed) {
-            throw new Error('NFT is not listed for sale');
-        }
-
-        // Thêm notification khi bắt đầu giao dịch
-        showNotification('Processing your purchase...', 'info');
-
-        const buyTx = await contract.methods.buyNFT(tokenId).send({
-            from: userAddress,
-            value: listing.price, // Sử dụng giá từ listing
-            gasPrice: '25000000000', // 25 nTIA
-            gas: '250000'
-        });
-
-        if (buyTx.status) {
-            showNotification('NFT purchased successfully!', 'success');
-            setTimeout(() => loadListedNFTs(), 2000);
-        }
-
-    } catch (error) {
-        console.error('Buy error:', error);
-        showNotification(error.message, 'error');
-    }
-}
-
-// Thêm hàm showNotification nếu chưa có
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.textContent = message;
-    document.body.appendChild(notification);
-
-    // Tự động xóa notification sau 3 giây
-    setTimeout(() => {
-        notification.remove();
-    }, 3000);
-}
-
 async function fetchMetadata(tokenURI) {
     const url = tokenURI.replace('ipfs://', 'https://ipfs.io/ipfs/');
     const response = await fetch(url);
     return await response.json();
 }
 
-// Load NFTs when page loads
-document.addEventListener('DOMContentLoaded', loadListedNFTs);
+function toggleSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    const header = section.previousElementSibling;
+    const isOpen = section.style.display !== 'none';
 
-// Add sort functionality
-document.getElementById('sort-filter').addEventListener('change', (e) => {
-    const sortBy = e.target.value;
-    // Implement sorting logic here
-}); 
+    // Toggle content
+    section.style.display = isOpen ? 'none' : 'block';
+
+    // Toggle header active state
+    if (isOpen) {
+        header.classList.remove('active');
+    } else {
+        header.classList.add('active');
+    }
+}
+
+async function loadNFTDetails() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenId = urlParams.get('tokenId');
+
+    if (!tokenId) {
+        window.location.href = 'marketplace.html';
+        return;
+    }
+
+    try {
+        const web3 = new Web3(window.ethereum);
+        const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+        // Get NFT details
+        const tokenURI = await contract.methods.tokenURI(tokenId).call();
+        const metadata = await fetchMetadata(tokenURI);
+        const listing = await contract.methods.getListingInfo(tokenId).call();
+        const owner = await contract.methods.ownerOf(tokenId).call();
+
+        // Update UI
+        document.getElementById('nftImage').src = metadata.image.replace('ipfs://', 'https://ipfs.io/ipfs/');
+        document.getElementById('nftName').textContent = metadata.name;
+        document.getElementById('nftDescription').textContent = metadata.description || 'No description available';
+        document.getElementById('ownerAddress').textContent = `${owner.substring(0, 6)}...${owner.substring(38)}`;
+        document.getElementById('ownerAddress').href = `https://explorer.forma.art/address/${owner}`;
+        document.getElementById('contractAddress').textContent = `${contractAddress.substring(0, 6)}...${contractAddress.substring(38)}`;
+        document.getElementById('contractAddress').href = `https://explorer.forma.art/address/${contractAddress}`;
+        document.getElementById('tokenId').textContent = tokenId;
+        document.getElementById('nftPrice').textContent = web3.utils.fromWei(listing.price, 'ether');
+
+        // Add buy button handler
+        const buyButton = document.getElementById('buyButton');
+        buyButton.onclick = async () => {
+            try {
+                const accounts = await web3.eth.requestAccounts();
+                const userAddress = accounts[0];
+
+                if (userAddress.toLowerCase() === owner.toLowerCase()) {
+                    showNotification('You cannot buy your own NFT', 'error');
+                    return;
+                }
+
+                showNotification('Processing your purchase...', 'info');
+
+                const buyTx = await contract.methods.buyNFT(tokenId).send({
+                    from: userAddress,
+                    value: listing.price,
+                    gasPrice: '25000000000',
+                    gas: '250000'
+                });
+
+                if (buyTx.status) {
+                    showNotification('NFT purchased successfully!', 'success');
+                    setTimeout(() => window.location.href = 'marketplace.html', 2000);
+                }
+            } catch (error) {
+                console.error('Buy error:', error);
+                showNotification(error.message, 'error');
+            }
+        };
+
+        // Add properties if they exist in metadata
+        if (metadata.attributes) {
+            const propertiesGrid = document.querySelector('.properties-grid');
+            propertiesGrid.innerHTML = metadata.attributes.map(attr => `
+                <div class="property-item">
+                    <span class="property-type">${attr.trait_type}</span>
+                    <span class="property-value">${attr.value}</span>
+                </div>
+            `).join('');
+        }
+
+        // Load transaction history
+        const events = await contract.getPastEvents('allEvents', {
+            filter: { tokenId: tokenId },
+            fromBlock: 0,
+            toBlock: 'latest'
+        });
+
+        // Process events to show history
+        events.forEach(event => {
+            switch (event.event) {
+                case 'NFTListed':
+                    document.getElementById('sellerAddress').textContent =
+                        `${event.returnValues.seller.substring(0, 6)}...${event.returnValues.seller.substring(38)}`;
+                    document.getElementById('listPrice').textContent =
+                        web3.utils.fromWei(event.returnValues.price, 'ether');
+                    document.getElementById('listDate').textContent =
+                        new Date(event.blockTimestamp * 1000).toLocaleDateString();
+                    break;
+                case 'Transfer':
+                    if (event.returnValues.from === '0x0000000000000000000000000000000000000000') {
+                        document.getElementById('minterAddress').textContent =
+                            `${event.returnValues.to.substring(0, 6)}...${event.returnValues.to.substring(38)}`;
+                        document.getElementById('mintDate').textContent =
+                            new Date(event.blockTimestamp * 1000).toLocaleDateString();
+                    }
+                    break;
+            }
+        });
+
+    } catch (error) {
+        console.error('Error loading NFT details:', error);
+        showNotification('Error loading NFT details: ' + error.message, 'error');
+    }
+}
+
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// Load details when page loads
+document.addEventListener('DOMContentLoaded', loadNFTDetails);
+
+// Thêm các hàm mới
+function expandImage() {
+    const img = document.getElementById('nftImage');
+    const modal = document.createElement('div');
+    modal.className = 'image-modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close-modal" onclick="this.parentElement.parentElement.remove()">
+                <i class="fas fa-times"></i>
+            </span>
+            <img src="${img.src}" alt="Expanded NFT">
+        </div>
+    `;
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+
+    document.body.appendChild(modal);
+    modal.style.display = 'flex';
+}
+
+async function refreshMetadata() {
+    const button = event.currentTarget;
+    const originalText = button.innerHTML;
+
+    try {
+        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        button.disabled = true;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const tokenId = urlParams.get('tokenId');
+        const web3 = new Web3(window.ethereum);
+        const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+        // Lấy lại metadata mới
+        const tokenURI = await contract.methods.tokenURI(tokenId).call();
+        const metadata = await fetchMetadata(tokenURI);
+
+        // Cập nhật UI
+        document.getElementById('nftImage').src = metadata.image.replace('ipfs://', 'https://ipfs.io/ipfs/');
+        document.getElementById('nftName').textContent = metadata.name;
+        document.getElementById('nftDescription').textContent = metadata.description || 'No description available';
+
+        // Cập nhật properties nếu có
+        if (metadata.attributes) {
+            const propertiesGrid = document.querySelector('.properties-grid');
+            propertiesGrid.innerHTML = metadata.attributes.map(attr => `
+                <div class="property-item">
+                    <span class="property-type">${attr.trait_type}</span>
+                    <span class="property-value">${attr.value}</span>
+                </div>
+            `).join('');
+        }
+
+        showNotification('Metadata refreshed successfully!', 'success');
+    } catch (error) {
+        console.error('Error refreshing metadata:', error);
+        showNotification('Error refreshing metadata', 'error');
+    } finally {
+        button.innerHTML = originalText;
+        button.disabled = false;
+    }
+} 
