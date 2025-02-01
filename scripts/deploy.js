@@ -10,11 +10,20 @@ async function main() {
     const formaNFTAddress = await formaNFT.getAddress();
     console.log("FormaNFT deployed to:", formaNFTAddress);
 
-    // Verify contract on Forma Explorer (nếu có)
-    // await hre.run("verify:verify", {
-    //   address: formaNFTAddress,
-    //   constructorArguments: [],
-    // });
+    console.log("Waiting for deployment confirmation...");
+    await formaNFT.deployTransaction.wait(5); // đợi 5 blocks
+
+    console.log("Verifying contract...");
+    try {
+        await hre.run("verify:verify", {
+            address: formaNFTAddress,
+            contract: "contracts/FormaNFT.sol:FormaNFT",
+            constructorArguments: []
+        });
+        console.log("Contract verified successfully");
+    } catch (error) {
+        console.error("Verification failed:", error);
+    }
 }
 
 main()

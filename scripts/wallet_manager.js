@@ -38,4 +38,14 @@ if (typeof window.ethereum !== 'undefined') {
     });
 }
 
+async function getCurrentWalletAddress() {
+    try {
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        return accounts[0];
+    } catch (error) {
+        console.error('Error getting wallet address:', error);
+        return null;
+    }
+}
+
 window.WalletManager = WalletManager; 

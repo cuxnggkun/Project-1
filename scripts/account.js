@@ -977,7 +977,7 @@ const contractABI = [
     }
 ];
 
-const contractAddress = "0xCe005f3133d44d0FcDfDc0AACB7B5c9b8C1dcDff"; // Thay thế bằng địa chỉ contract NFT của bạn
+const contractAddress = "0xDd5e79e75dF4a14550E8127Acf2AE6414E937505"; // Thay thế bằng địa chỉ contract NFT của bạn
 
 const PINATA_GATEWAY = 'https://gateway.pinata.cloud/ipfs/';
 
